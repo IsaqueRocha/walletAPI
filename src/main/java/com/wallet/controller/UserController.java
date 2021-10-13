@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,11 @@ public class UserController {
     public ResponseEntity<Response<UserDTO>> create(@Valid @RequestBody UserDTO dto, BindingResult result) {
         Response<UserDTO> response = new Response<>();
 
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach( e -> response.getErrors().add( e.getDefaultMessage() ) );
+            return ResponseEntity.status( HttpStatus.BAD_REQUEST ).body( response );
+        }
+
         User user = userService.save( this.convertDtoToEntity( dto ) );
 
         response.setData( this.convertEntityToDto( user ) );
@@ -36,6 +42,7 @@ public class UserController {
     private User convertDtoToEntity(UserDTO dto) {
         User u = new User();
 
+        u.setId( dto.getId() );
         u.setName( dto.getName() );
         u.setEmail( dto.getEmail() );
         u.setPassword( dto.getPassword() );
@@ -46,6 +53,7 @@ public class UserController {
     private UserDTO convertEntityToDto(User u) {
         UserDTO dto = new UserDTO();
 
+        dto.setId( u.getId() );
         dto.setName( u.getName() );
         dto.setEmail( u.getEmail() );
         dto.setPassword( u.getPassword() );
