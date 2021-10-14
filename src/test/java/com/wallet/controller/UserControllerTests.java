@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 class UserControllerTests {
 
     private static final Long ID = 1L;
@@ -47,7 +46,7 @@ class UserControllerTests {
                 .andExpect( MockMvcResultMatchers.jsonPath( "$.data.id" ).value( ID ) )
                 .andExpect( MockMvcResultMatchers.jsonPath( "$.data.name" ).value( NAME ) )
                 .andExpect( MockMvcResultMatchers.jsonPath( "$.data.email" ).value( EMAIL ) )
-                .andExpect( MockMvcResultMatchers.jsonPath( "$.data.password" ).value( PASSWORD ) );
+                .andExpect( MockMvcResultMatchers.jsonPath( "$.data.password" ).doesNotExist() );
     }
 
     @Test
