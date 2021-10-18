@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.Optional;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class UserRepositoryTests {
     private static final String EMAIL = "email@test.com";
 
