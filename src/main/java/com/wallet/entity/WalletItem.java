@@ -1,5 +1,6 @@
 package com.wallet.entity;
 
+import com.wallet.util.enums.TypeEnum;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -30,7 +31,8 @@ public class WalletItem implements Serializable {
     @NotNull
     private Date date;
     @NotNull
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TypeEnum type;
     @NotNull
     private String description;
     @NotNull

@@ -20,7 +20,8 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 public class Wallet implements Serializable {
-    private static final Long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 3090682828341375315L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
