@@ -168,4 +168,17 @@ class WalletItemRepositoryTests {
         Assertions.assertEquals( 1, response.size() );
         Assertions.assertEquals( TypeEnum.SD, response.get( 0 ).getType() );
     }
+
+    @Test
+    void testSumByWallet() {
+        Optional<Wallet> w = walletRepository.findById( this.savedWalletId );
+
+        walletItemRepository.save(
+                new WalletItem( null, w.get(), DATE, TypeEnum.SD, DESCRIPTION, BigDecimal.valueOf( 150.80 ) )
+        );
+
+        BigDecimal response = walletItemRepository.sumByWalletId( this.savedWalletId );
+
+        Assertions.assertEquals( 0, response.compareTo( BigDecimal.valueOf( 215.8 ) ) );
+    }
 }
